@@ -142,7 +142,7 @@ public class MainActivity extends Activity {
                 progress.setVisibility(View.GONE);
                 injectNativeHelpers();
                 // Encourage the existing web service worker to refresh without exposing hosting details.
-                view.evaluateJavascript("if(navigator.serviceWorker){navigator.serviceWorker.getRegistrations().then(r=>r.forEach(x=>x.update())).catch(()=>{});}", null);
+                
             }
 
             @Override
@@ -204,7 +204,6 @@ public class MainActivity extends Activity {
 
         // Never expose GitHub / repository destinations to normal users.
         if (host.equals("github.com") || host.endsWith(".github.com")) {
-            Toast.makeText(this, "This link is not available in the app.", Toast.LENGTH_SHORT).show();
             return true;
         }
 
@@ -225,7 +224,7 @@ public class MainActivity extends Activity {
             Intent i = new Intent(Intent.ACTION_VIEW, uri);
             startActivity(i);
         } catch (ActivityNotFoundException e) {
-            Toast.makeText(this, "No compatible app is available.", Toast.LENGTH_SHORT).show();
+            /* no user-facing hosting/link error popup */
         }
     }
 
@@ -256,7 +255,7 @@ public class MainActivity extends Activity {
         catch (Exception e) {
             fileCallback.onReceiveValue(null);
             fileCallback = null;
-            Toast.makeText(this, "Unable to open image picker.", Toast.LENGTH_SHORT).show();
+            /* picker cancelled/unavailable: stay silent */
         }
     }
 
